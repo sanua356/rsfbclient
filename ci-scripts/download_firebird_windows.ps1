@@ -36,6 +36,8 @@ Remove-Item $outputPath
 Set-Location -Path $outputFolder
 
 $currentPath = Get-Location
+
 $runServiceFilename = "./install_service.bat"
 & "$runServiceFilename"
+
 Set-Location $currentPath
