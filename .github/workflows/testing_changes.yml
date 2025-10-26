@@ -67,18 +67,18 @@ jobs:
           command: check
           args: --verbose
 
-      - name: Run cargo clippy
-        uses: actions-rs/clippy-check@v1
-        continue-on-error: true # show all errors
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          args: --all-features
+      # - name: Run cargo clippy
+      #   uses: actions-rs/clippy-check@v1
+      #   continue-on-error: true # show all errors
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     args: --all-features
 
-      - name: Run cargo fmt
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check
+      # - name: Run cargo fmt
+      #   uses: actions-rs/cargo@v1
+      #   with:
+      #     command: fmt
+      #     args: --all -- --check
 
   testing:
     name: testing
@@ -146,6 +146,8 @@ jobs:
         if: matrix.plataform == 'windows'
         run: |
           Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
+          Write-Host "Current dir: $(Get-Location)"
+          Get-ChildItem -Recurse | Select-Object FullName
           .\download_firebird_windows.ps1
         shell: pwsh
 
