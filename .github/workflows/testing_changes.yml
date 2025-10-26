@@ -148,7 +148,7 @@ jobs:
           Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
           Write-Host "Current dir: $(Get-Location)"
           Get-ChildItem -Recurse | Select-Object FullName
-          .\download_firebird_windows.ps1
+          ./.github/workflows/download_firebird_windows.ps1
         shell: pwsh
 
       - name: Setup FirebirdSQL ${{ matrix.firebird }} on MacOSX
