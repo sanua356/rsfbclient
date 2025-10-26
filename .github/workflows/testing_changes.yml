@@ -211,11 +211,8 @@ jobs:
       - name: Create database test.fdb in fb ${{ matrix.firebird }} on Windows
         if: matrix.plataform == 'windows'
         run: |
-          Stop-Service -Name 'FirebirdServerDefaultInstance' -Force
-          & "C:\Program Files\Firebird\isql.exe" -user sysdba employee
-          create user SYSDBA password 'masterkey';
-          exit;
-          Start-Service -Name 'FirebirdServerDefaultInstance'
+          Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
+          ./ci-scripts/create_sysdba_user_windows.ps1
           echo "CREATE DATABASE 'localhost:test.fdb';" | & "C:\Program Files\Firebird\isql.exe" -bail -quiet -z -user SYSDBA -password masterkey
 
       - name: Create database test.fdb in fb ${{ matrix.firebird }} on MacOSX
