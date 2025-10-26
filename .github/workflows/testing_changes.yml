@@ -148,8 +148,7 @@ jobs:
         working-directory: ${{ github.workspace }}
         run: |
           Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
-          Write-Host "Current dir: $(Get-Location)"
-          Get-ChildItem -Recurse | Select-Object FullName
+          TREE $(Get-Location)
           ./ci-scripts/download_firebird_windows.ps1
 
       - name: Setup FirebirdSQL ${{ matrix.firebird }} on MacOSX
