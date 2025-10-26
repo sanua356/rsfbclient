@@ -144,13 +144,13 @@ jobs:
 
       - name: Setup FirebirdSQL ${{ matrix.firebird }} on Windows
         if: matrix.plataform == 'windows'
-        uses: actions/checkout@v4
+        shell: pwsh
+        working-directory: ${{ github.workspace }}
         run: |
           Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
           Write-Host "Current dir: $(Get-Location)"
           Get-ChildItem -Recurse | Select-Object FullName
           ./ci-scripts/download_firebird_windows.ps1
-        shell: pwsh
 
       - name: Setup FirebirdSQL ${{ matrix.firebird }} on MacOSX
         if: matrix.plataform == 'macos'
