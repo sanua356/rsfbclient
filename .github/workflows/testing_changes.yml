@@ -150,7 +150,6 @@ jobs:
         shell: pwsh
         run: |
           Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
-          TREE $(Get-Location)
           ./ci-scripts/download_firebird_windows.ps1
 
       - name: Setup FirebirdSQL ${{ matrix.firebird }} on MacOSX
@@ -212,7 +211,7 @@ jobs:
       - name: Create database test.fdb in fb ${{ matrix.firebird }} on Windows
         if: matrix.plataform == 'windows'
         run: |
-          echo "CREATE DATABASE 'localhost:test.fdb';" | & "C:\Program Files\Firebird\Firebird_5_0\isql.exe" -bail -quiet -z -user SYSDBA -password masterkey
+          echo "CREATE DATABASE 'localhost:test.fdb';" | & "C:\Program Files\Firebird\isql.exe" -bail -quiet -z -user SYSDBA -password masterkey
 
       - name: Create database test.fdb in fb ${{ matrix.firebird }} on MacOSX
         if: matrix.plataform == 'macos'
