@@ -163,8 +163,9 @@ jobs:
 
       - name: Locating fbclient.lib Dir on Windows
         if: matrix.plataform == 'windows'
-        shell: powershell
+        shell: pwsh
         run: |
+          Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
           ./ci-scripts/search_common_folders_and_linking_windows.ps1
 
       - name: Create a alias to test.fdb on fb v2
