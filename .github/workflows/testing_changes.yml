@@ -142,10 +142,12 @@ jobs:
           firebird_password: "test_password"
           isc_password: "masterkey"
 
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
       - name: Setup FirebirdSQL ${{ matrix.firebird }} on Windows
         if: matrix.plataform == 'windows'
         shell: pwsh
-        working-directory: ${{ github.workspace }}
         run: |
           Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
           TREE $(Get-Location)
@@ -186,9 +188,6 @@ jobs:
           Search-Common-Folders -FileName "fbclient.lib"
           Search-Common-Folders -FileName "fbclient_ms.lib"
           Search-Common-Folders -FileName "isql.exe"
-
-      - name: Checkout sources
-        uses: actions/checkout@v2
 
       - name: Create a alias to test.fdb on fb v2
         if: matrix.firebird == 'v2'
