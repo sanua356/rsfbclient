@@ -163,10 +163,31 @@ jobs:
 
       - name: Locating fbclient.lib Dir on Windows
         if: matrix.plataform == 'windows'
-        shell: pwsh
+        shell: powershell
         run: |
-          Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
-          ./ci-scripts/search_common_folders_and_linking_windows.ps1
+          function Search-Common-Folders() {
+            param (
+                [string]$FileName
+            )
+            $WinSysDir = [Environment]::SystemDirectory
+            $CommonDirs = @(
+                "C:\Program Files\Firebird",
+                "C:\Firebird",
+                "${WinSysDir}"
+                )
+            Foreach ($folder in $CommonDirs) {
+              echo "# Finding relevant files in FirebirdSQL install:"
+              $found = Get-ChildItem -File -Recurse -Path $folder -Include $FileName -ea 0
+              Foreach ($source in $found) {
+                echo "  - $source"
+                Copy-Item -Path $source
+              }
+            }
+          }
+          Search-Common-Folders -FileName "fbclient.dll"
+          Search-Common-Folders -FileName "fbclient.lib"
+          Search-Common-Folders -FileName "fbclient_ms.lib"
+          Search-Common-Folders -FileName "isql.exe"
 
       - name: Create a alias to test.fdb on fb v2
         if: matrix.firebird == 'v2'
