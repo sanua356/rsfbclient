@@ -181,8 +181,9 @@ jobs:
               Foreach ($source in $found) {
                 echo "  - $source"
                 Copy-Item -Path $source
-                $currentPath = [System.Environment]::GetEnvironmentVariable("PATH", "Machine")
-                [System.Environment]::SetEnvironmentVariable("PATH", "$currentPath;$source", "Machine")
+                $dirPath = Split-Path -Path $source -Parent
+                $envPATHValue = [System.Environment]::GetEnvironmentVariable("PATH", "Machine")
+                [System.Environment]::SetEnvironmentVariable("PATH", "$envPATHValue;$dirPath", "Machine")
               }
             }
           }
